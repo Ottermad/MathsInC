@@ -17,6 +17,9 @@ int main(int argc, char *argv[])
 		else if (strcmp(option, "nth") == 0) {
 			nthTermInput();
 		}
+		else if (strcmp(option, "share") == 0) {
+			shareRatioInput();
+		}
 		else {
 			printf("Not a valid option\n");
 		}

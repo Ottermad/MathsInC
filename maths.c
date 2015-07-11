@@ -68,7 +68,7 @@ void nthTermInput ()
 	nthTerm(myTerms);
 }
 
-double * shareRatio(char ratio[], double amount)
+void shareRatio(char ratio[], double amount, double *ans)
 {
 	// Count number of colons
 	int length = strlen(ratio);
@@ -87,7 +87,6 @@ double * shareRatio(char ratio[], double amount)
 	double nums[count];
 	int lengthNums = count;
 	count++;
-	double ans[count];
 	char *token = strtok(ratio, ":");
 	i = 0;
 	while (token) {
@@ -105,19 +104,9 @@ double * shareRatio(char ratio[], double amount)
 	double perUnit = amount / total;
 
 	for (i = 0; i < lengthNums; i++) {
-		printf("NUMS %f\n", nums[i]);
 		ans[i + 1] = nums[i] * perUnit;
 	}
-
-	ans[0] = sizeof(ans) / sizeof(double);
-	/*for (i = 1; i < ans[0]; i++) {
-		if (i > 1) {
-			printf(":");
-		}
-		printf("%f", *(ans + i));
-		printf("I is %d\n", i);
-	}*/
-	return ans;
+	
 }
 
 void shareRatioInput()
@@ -128,17 +117,29 @@ void shareRatioInput()
 	fgets(ratio, sizeof(ratio), stdin);
 	printf("Enter amount to share:\n");
 	fgets(amount, sizeof(amount), stdin);
-	double *ans;
-	ans = shareRatio(ratio, atof(amount));
-	printf("In input\n");
-	printf("ANS %f\n", *(ans));	
-	int i = 1;
-	for (i = 1; i < *(ans); i++) {
-		printf("In loop\n");
+
+	int length = strlen(ratio);
+	int i = 0;
+	int count = 0;
+
+	char colon = ':';
+
+	for (i = 0; i < length; i++) {
+		if (ratio[i] == colon) {
+			count++;
+		}
+	}
+	count++;
+	double ans[count];
+	ans[0] = count + 1;
+	shareRatio(ratio, atof(amount), ans);	
+	i = 1;
+	for (i = 1; i < ans[0]; i++) {
 		if (i > 1) {
 			printf(":");
 		}
-		printf("%f\n", *(ans + i));
+		printf("%f", ans[i]);
 	}
+	printf("\n");
 
 }
